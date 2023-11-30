@@ -1,0 +1,75 @@
+create database bikes; 
+show databases;
+use bikes;
+
+/* SQL query for categories load results into a DataFrame */
+SELECT 
+    category_name 
+FROM 
+    categories;
+    
+/* ORDER BY name of customers */
+SELECT 
+    first_name,
+    last_name
+FROM 
+    customers
+ORDER BY
+    last_name;
+/* Distinct last name and order by */
+SELECT 
+    DISTINCT
+    last_name
+FROM 
+    customers
+ORDER BY 
+    last_name ASC
+LIMIT 5;
+/* Using where clause */
+SELECT first_name,last_name
+FROM customers
+WHERE last_name = 'Acevedo'
+ORDER BY first_name;
+SELECT * FROM customers
+WHERE state IN ('CA', 'NY')
+LIMIT 5;
+
+/* Using Like */
+SELECT * FROM products
+WHERE product_name LIKE 'T%'
+LIMIT 5;
+
+/*Aggregate Functions*/
+SELECT 
+    SUM(quantity) AS total_items_ordered
+FROM 
+    order_items;
+    
+/* Average */
+SELECT AVG(list_price * discount) AS avg_discount_usd
+FROM order_items;
+    
+/* Inner Join */
+SELECT * FROM orders
+INNER JOIN customers
+ON
+orders.customer_id = customers.customer_id;
+
+/* left join */
+SELECT * FROM orders
+LEFT JOIN customers
+ON
+orders.customer_id = customers.customer_id;
+
+/* Sub query */
+SELECT * FROM products
+WHERE model_year = 2019
+AND
+    list_price > (
+                  SELECT
+                      AVG(list_price)
+                  FROM
+                      products
+                  WHERE
+                      model_year = 2019
+                 );
